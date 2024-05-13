@@ -8,7 +8,7 @@ interface SocketProps {
 
 const Socket: React.FC<SocketProps> = ({ setNewSensorData }: SocketProps) => {
   // State for the server time
-  const [time, setTime] = React.useState<string>('fetching');
+  const [time, setTime] = React.useState<string>('Linking with the Real time server!!');
 
   // Effect to establish socket connection and handle events
   React.useEffect(() => {
@@ -43,7 +43,7 @@ const Socket: React.FC<SocketProps> = ({ setNewSensorData }: SocketProps) => {
     <div className="mb-2">
       {/* Display server time */}
       <p className='bg-blue-200 border-blue-800 border-[2px] p-1 rounded-md shadow-md'>
-        Server Time: {time}
+        Server Time: <span className='bg-green-200 p-1 px-3 rounded-md'>{time} </span>
       </p>
     </div>
   );

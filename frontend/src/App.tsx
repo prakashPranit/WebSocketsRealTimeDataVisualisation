@@ -54,7 +54,20 @@ function App() {
    fetchNewData()
  },[newSensorData])
 
-
+  useEffect(()=>{
+    function fetchNewData() {
+      axios
+      .get("http://localhost:5000/api/sensors")
+      .then((response) => {
+       const formattedData = formatSensorReadings(response.data??[])
+       setApiResponse(formattedData.length>0?formattedData:null)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }
+    fetchNewData()
+  },[])
 
   /**
    * The JSX element representing the App component.

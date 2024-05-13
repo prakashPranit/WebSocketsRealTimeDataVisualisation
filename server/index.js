@@ -46,7 +46,7 @@ io.on('connection', (socket) => {
 // Periodically emit time to clients in the 'TEMP-SENSOR-ROOM' room
 setInterval(() => {
   io.to('TEMP-SENSOR-ROOM').emit('time', new Date().toTimeString());
-}, 2000);
+}, 1000);
 
 // Route handler for the root endpoint
 app.get('/', async (req, res) => {

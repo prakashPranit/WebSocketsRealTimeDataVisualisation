@@ -26,7 +26,7 @@ interface LineChartProps {
 const LineChartCustom = ({ data }: LineChartProps) => {
   // State variables for slider values and filtered chart data
   const [fromSlider, setFromSlider] = useState(0);
-  const [toSlider, setToSlider] = useState(0);
+  const [toSlider, setToSlider] = useState(20);
   const [startTime, setStartTime] = useState(0);
   const [endTime, setEndTime] = useState(0);
   const [chartData, setChartData] = useState(data);
@@ -82,36 +82,40 @@ const LineChartCustom = ({ data }: LineChartProps) => {
 
   return (
     <>
-      <div className='flex flex-row gap-2'>
-        <LineChart className='grow' width={700} height={400} data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
-          <Line type="monotone" dataKey="TEMP" stroke="#8884d8" />
-          <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
-          <XAxis dataKey="name" />
-          <YAxis />
-          <Tooltip />
-        </LineChart>
-        <div>
-          <Card className='mb-4 p-1 w-[400px]'>
-            <div>
-              <label htmlFor="from-range" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">From Time</label>
-              <input type="range" min={startTime} max={endTime} step={2} value={fromSlider} className="range range-primary w-full" onChange={handleFromSlider} />
-              <div className="w-full flex justify-between text-xs px-2">
-                {data.map((item, index) => <span key={index} className='text-gray-500 font-bold text-md'>| {item.time} |</span>)}
-              </div>
-            </div>
-          </Card>
 
-          <Card className='mb-2 p-2 w-[400px]'>
-            <div>
-              <label htmlFor="to-range" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">To Time</label>
-              <input type="range" min={startTime} max={endTime} step={2} value={toSlider} className="range range-primary w-full" onChange={handleToSlider} />
-              <div className="w-full flex justify-between text-xs px-2">
-                {data.map((item, index) => <span key={index} className='text-gray-500 font-bold text-md'>| {item.time} |</span>)}
-              </div>
+    {
+      chartData.length === 0 ? <p className='text-red-500 text-center'>No data available</p> :<div className='flex flex-row gap-2'>
+      <LineChart className='grow' width={700} height={400} data={chartData} margin={{ top: 5, right: 20, bottom: 5, left: 0 }}>
+        <Line type="monotone" dataKey="TEMP" stroke="#8884d8" />
+        <CartesianGrid stroke="#ccc" strokeDasharray="5 5" />
+        <XAxis dataKey="name" />
+        <YAxis />
+        <Tooltip />
+      </LineChart>
+      <div>
+        <Card className='mb-4 p-1 w-[400px]'>
+          <div>
+            <label htmlFor="from-range" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">From Time</label>
+            <input type="range" min={startTime} max={endTime} step={2} value={fromSlider} className="range range-primary w-full" onChange={handleFromSlider} />
+            <div className="w-full flex justify-between text-xs px-2">
+              {data.map((item, index) => <span key={index} className='text-gray-500 font-bold text-md'>| {item.time} |</span>)}
             </div>
-          </Card>
-        </div>
+          </div>
+        </Card>
+
+        <Card className='mb-2 p-2 w-[400px]'>
+          <div>
+            <label htmlFor="to-range" className="block mb-2 text-sm font-medium text-gray-900 dark:text-white">To Time</label>
+            <input type="range" min={startTime} max={endTime} step={2} value={toSlider} className="range range-primary w-full" onChange={handleToSlider} />
+            <div className="w-full flex justify-between text-xs px-2">
+              {data.map((item, index) => <span key={index} className='text-gray-500 font-bold text-md'>| {item.time} |</span>)}
+            </div>
+          </div>
+        </Card>
       </div>
+    </div>
+    }
+      
       <Toaster />
     </>
   );

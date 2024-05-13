@@ -33,15 +33,19 @@ async function createTempReading(name, value, time, sensorId) {
 // Function to simulate creating temp readings for different sensors in a regular interval
 async function createTempReadingsRegularly(sensorIds) {
   const interval = 2000; // 2 seconds interval
-  let readingCounter = 0;
+  
   for (const sensorId of sensorIds) {
-    setInterval(async () => {
-      const name = `${(readingCounter % 24)>12?(readingCounter % 24 +" PM"):(readingCounter % 24)+" AM"}`;
-      const value = Math.floor(Math.random() * 400); // Random temperature value for demo
-      const time = name.split(" ")[0]+":00";
-      await createTempReading(name, value, time, sensorId);
-      readingCounter++;
-    }, interval);
+    (function(sensorId) {
+      let readingCounter = 0; // Initialize readingCounter for each sensor
+      //Using closure to capture the value of readingCounter for each iteration of the loop. You can achieve this by wrapping the setInterval inside a function that accepts the sensorId and readingCounter as parameters. 
+      setInterval(async () => {
+        const name = `${(readingCounter % 24) > 12 ? (readingCounter % 24 + " PM") : (readingCounter % 24) + " AM"}`;
+        const value = Math.floor(Math.random() * 400); // Random temperature value for demo
+        const time = name.split(" ")[0] + ":00";
+        await createTempReading(name, value, time, sensorId);
+        readingCounter=   readingCounter + 2;
+      }, interval);
+    })(sensorId);
   }
 }
 
